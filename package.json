@@ -1,0 +1,23 @@
+{
+  "name": "dbscan",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "d3": "^4.13.0",
+    "d3-chart-scatter": "0.0.3",
+    "d3-scale": "^2.0.0",
+    "d3-selection": "^1.3.0",
+    "react": "^16.2.0",
+    "react-d3": "^0.4.0",
+    "react-dom": "^16.2.0",
+    "react-radio-buttons": "^1.2.1",
+    "react-scripts": "1.1.1",
+    "react-slider": "^0.11.0"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  }
+}

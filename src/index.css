@@ -1,0 +1,68 @@
+body {
+  margin: 10px;
+  padding: 0;
+  font-family: sans-serif;
+  font-size: 16pt;
+}
+
+.ClusterApp {
+  width: 1200px;
+  background-color: #CECECE;
+  margin: 0 auto;
+  border: 1px solid black;
+}
+
+input[type=checkbox] {
+  transform: scale(2.0);
+}
+
+.SideAndPlot {
+
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  margin: 0;
+  padding: 0;
+}
+
+.SideBar {
+  background-color: #CECECE;
+  width: 500px;
+  padding: 0 10px;
+}
+
+.PlotRegion{
+  background-color: white;
+}
+
+.PlotRegion:after{
+  content:"";
+  display: table;
+  clear:both;
+}
+
+.StepBar{
+  background-color: #CECECE;
+  margin: 0;
+  padding: 0;
+}
+
+.NumericSlider {
+  border: 1px solid black;
+  margin: 15px 5px;
+}
+
+.SliderControls {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+
+.SliderControls .Slider {
+  flex-grow: 3;
+  flex-shrink: 3;
+}
+
+.SliderControls .TextInput {
+  width: 6ex;
+}
