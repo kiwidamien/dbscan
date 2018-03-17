@@ -1,32 +1,9 @@
 import React from 'react';
 import Checkbox from './Checkbox';
 import NumericSlider from './NumericSlider';
-import { RadioGroup, RadioButton } from 'react-radio-buttons';
 
-const HighlightGroup = (props) => {
-  return (
-    <RadioGroup
-      onChange={ props.onChange }
-      pointColor='#000000'
-      value={props.selected}
-      rootColor='#000000'
-      vertical>
-      <RadioButton value="control">
-        Highlight control points
-      </RadioButton>
-      <RadioButton value="border">
-        Highlight border points
-      </RadioButton>
-      <RadioButton value="noise">
-        Highlight noise points
-      </RadioButton>
-      <RadioButton value="none">
-        Do not highlight
-      </RadioButton>
-    </RadioGroup>
-  );
-}
 const SideBar = (props) => {
+  console.log(props);
   return (
     <div className='SideBar'>
       <NumericSlider

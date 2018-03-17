@@ -1,5 +1,5 @@
-import React, {Component} from 'react';
-import { scaleBand, scaleLinear } from 'd3-scale';
+import React from 'react';
+import { scaleLinear } from 'd3-scale';
 import {select} from 'd3-selection';
 import {axisBottom, axisLeft  } from 'd3-axis';
 

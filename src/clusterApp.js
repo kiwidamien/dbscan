@@ -23,7 +23,7 @@ class ClusterApp extends Component{
       clusterNumber: [],
       showNumbers: false,
       showNeighborhood: false,
-      highlightTypes: false,
+      highlightTypes: true,
       colorClusters: false,
       step: 0,
     }
@@ -74,6 +74,8 @@ class ClusterApp extends Component{
         <SideBar
           epsilon={this.state.epsilon}
           minPoints={this.state.minPoints}
+          showDifferentTypes={this.state.highlightTypes}
+          colorClusters={this.state.colorClusters}
           onRadiusChange={(num) => this.onRadiusChange(num)}
           onPointsChange={(num) => this.onMinPointsChange(num)}
           setShowNumbers={(value) => {this.setState({showNumbers: !this.state.showNumbers})}}
