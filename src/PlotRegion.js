@@ -3,6 +3,8 @@ import { scaleLinear } from 'd3-scale';
 import {select} from 'd3-selection';
 import {axisBottom, axisLeft  } from 'd3-axis';
 
+
+
 const styles = {
   width   : 700,
   height  : 700,
@@ -34,8 +36,14 @@ const Axis = (props) => {
   );
 }
 
+const getClusterColor = (clusterNumber) => {
+  const colorNames = ['#000000', '#66c2a4', '#2ca25f', '#006d2c'];
+  return colorNames[clusterNumber % colorNames.length];
+}
+
 const DrawSingleCircle = (datum, index, props) => {
   const {xScale, yScale} = props;
+
   const pointProps = {
     cx: xScale(datum[0]),
     cy: yScale(datum[1]),
@@ -72,10 +80,9 @@ const DisplayAsRectangles = (props) => {
 }
 
 const DisplayPoint = (datum, numNeighbors, clusterNumber, props) => {
-  const colorNames = ['#000000', '#66c2a4', '#2ca25f', '#006d2c'];
 
   // are we coloring the point?
-  let stroke = (props.colorClusters && colorNames[clusterNumber % colorNames.length]) || '#000000';
+  let stroke = (props.colorClusters && getClusterColor(clusterNumber)) || '#000000';
   let fill = stroke;
 
   // what type of point is it?
@@ -101,6 +108,18 @@ const DisplayGlyphs = (props) => {
   });
 };
 
+const DrawNeighborhood = (processedData, type, {xScale, yScale, colorClusters, r, opacity}) => {
+  return processedData.filter((datum) => (datum.type === type)).map((datum) => {
+    return DrawSingleCircle(datum.point, -1, {
+      xScale,
+      yScale,
+      r,
+      fill: (colorClusters && getClusterColor(datum.clusterNumber)) || '#000000',
+      opacity: 0.3
+    })
+  });
+}
+
 const DisplayAsNumbers = (props) => {
   const {xScale, yScale} = props;
   const elements = props.data.map( (datum, index) => {
@@ -111,8 +130,10 @@ const DisplayAsNumbers = (props) => {
       fontSize: '20px',
       fill: 'blue'
     }
+    const clusterNumber = props.clusterNumber[index];
+    const text = props.neighborList[index].length + ((clusterNumber) ? ('/' + clusterNumber) : '');
     return (
-      <g><text {...labelProps}>{props.neighborList[index].length}/{props.clusterNumber[index] || '-'}</text></g>
+      <g><text {...labelProps}>{text}</text></g>
     )
   });
 
@@ -128,6 +149,26 @@ const ScatterPlot = (props) => {
   const yAxis = axisLeft(yScale)
     .tickSize(3)
     .ticks([5]);
+
+  const processedData = props.data.map((datum, index) => {
+    const numNeighbors = props.neighborList[index].length;
+    const type = (props.clusterNumber[index] === 0) ? 'NOISE' : (numNeighbors < props.minPoints) ? 'BORDER' : 'CORE';
+
+    return {
+      point: datum,
+      numNeighbors: props.neighborList[index].length,
+      clusterNumber: props.clusterNumber[index],
+      type
+    }
+  });
+
+  const neighborhoodProps = {
+    xScale,
+    yScale,
+    r: xScale(epsilon) - xScale(0),
+    opacity: 0.3,
+    colorClusters: props.colorClusters
+  };
 
   return (
     <svg
@@ -146,14 +187,11 @@ const ScatterPlot = (props) => {
       translateVertical={0}
     />
 
-    {props.showNeighborhood && <DisplayAsCircles
-      data={props.data}
-      xScale={xScale}
-      yScale={yScale}
-      r={xScale(epsilon) - xScale(0)}
-      fill='#A5A5FF'
-      opacity={0.6}
-    />}
+    {props.showNeighborhoodCore && DrawNeighborhood(processedData, 'CORE', neighborhoodProps)}
+
+    {props.showNeighborhoodBorder && DrawNeighborhood(processedData, 'BORDER', neighborhoodProps)}
+
+    {props.showNeighborhoodNoise && DrawNeighborhood(processedData, 'NOISE', neighborhoodProps)}
 
     <DisplayGlyphs
       data={props.data}

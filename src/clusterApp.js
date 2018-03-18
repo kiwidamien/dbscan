@@ -91,7 +91,9 @@ class ClusterApp extends Component{
             neighborList={this.state.neighborList}
             clusterNumber={this.state.clusterNumber}
             showNumbers={this.state.showNumbers}
-            showNeighborhood={this.state.showNeighborhood}
+            showNeighborhoodCore={this.state.showNeighborhood}
+            showNeighborhoodBorder={this.state.showNeighborhood}
+            showNeighborhoodNoise={this.state.showNeighborhood}
             highlightTypes={this.state.highlightTypes}
             colorClusters={this.state.colorClusters}
           />
