@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import PlotRegion from './PlotRegion';
 import {SideBar, StepBar} from './SideBar';
 import {range} from 'd3';
-import {getMetricSquare, getNumberOfNeighbors, getIndexOfNeighbors, getClusterNumber} from './dbscan';
+import {getMetricSquare, getIndexOfNeighbors, getClusterNumber} from './dbscan';
 const settings = {
   width: 500,
   height: 500,
@@ -63,7 +63,6 @@ class ClusterApp extends Component{
   }
 
   render() {
-    console.log(this.state);
     return (
     <div>
     <div style={{textAlign:'center'}}>

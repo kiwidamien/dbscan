@@ -3,7 +3,6 @@ import Checkbox from './Checkbox';
 import NumericSlider from './NumericSlider';
 
 const SideBar = (props) => {
-  console.log(props);
   return (
     <div className='SideBar'>
       <NumericSlider

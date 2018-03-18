@@ -9,10 +9,6 @@ const getMetricSquare = (data) => {
     });
 }
 
-const getNumberOfNeighbors = (metricSq, radius) => {
-  return metricSq.map((row, idx) => row.filter((d2) => d2 < radius*radius).length);
-}
-
 const getIndexOfNeighbors = (metricSq, radius) => {
   const neighborList = [];
 
@@ -38,14 +34,25 @@ const getClusterNumber = (metricSq, radius, minPoints) => {
     });
 
     const placed = Array(metricSq[0].length).fill(0);
+
     let currentCluster = 0;
 
     corePoints.forEach( (data_index) => {
-      if (!placed[data_index]) {
-        currentCluster += 1;
+      if (placed[data_index]) {
+        // point already in cluster
+        return;
       }
 
-      neighbors[data_index].forEach((new_index) => {placed[new_index] = currentCluster});
+      currentCluster = currentCluster + 1;
+
+      const inNeighborhood = new Set(neighbors[data_index]);
+      while (inNeighborhood.size) {
+        for (let toAssign of inNeighborhood) {
+          placed[toAssign] = currentCluster;
+          neighbors[toAssign].filter((i) => (placed[i] === 0)).forEach( (newElem) => inNeighborhood.add(newElem));
+          inNeighborhood.delete(toAssign);
+        }
+      }
     });
 
     return placed;
@@ -53,7 +60,6 @@ const getClusterNumber = (metricSq, radius, minPoints) => {
 
 export {
   getMetricSquare,
-  getNumberOfNeighbors,
   getIndexOfNeighbors,
   getClusterNumber
 }

@@ -3,8 +3,6 @@ import {scaleLinear} from 'd3-scale';
 import {select} from 'd3-selection';
 import {axisBottom, axisLeft} from 'd3-axis';
 
-
-
 const styles = {
   width   : 700,
   height  : 700,
