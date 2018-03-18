@@ -175,11 +175,11 @@ const ScatterPlot = (props) => {
       translateVertical={0}
     />
 
-    {props.showNeighborhoodCore && DrawNeighborhood(processedData, 'CORE', neighborhoodProps)}
+    {props.showNeighborhoods.core && DrawNeighborhood(processedData, 'CORE', neighborhoodProps)}
 
-    {props.showNeighborhoodBorder && DrawNeighborhood(processedData, 'BORDER', neighborhoodProps)}
+    {props.showNeighborhoods.border && DrawNeighborhood(processedData, 'BORDER', neighborhoodProps)}
 
-    {props.showNeighborhoodNoise && DrawNeighborhood(processedData, 'NOISE', neighborhoodProps)}
+    {props.showNeighborhoods.noise && DrawNeighborhood(processedData, 'NOISE', neighborhoodProps)}
 
     <DisplayGlyphs
       data={processedData}

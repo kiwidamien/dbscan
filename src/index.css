@@ -66,3 +66,20 @@ input[type=checkbox] {
 .SliderControls .TextInput {
   width: 6ex;
 }
+
+.NeighborhoodControl {
+  border: 1px solid black;
+  padding: 10px;
+  margin: 20px 5px;
+}
+
+.NeighborhoodButtonContainer{
+  display: flex;
+  margin-top: 20px;
+  justify-content:space-between;
+}
+
+button {
+  width: 45%;
+  font-size: 14pt;
+}

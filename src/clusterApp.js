@@ -22,7 +22,7 @@ class ClusterApp extends Component{
       neighborList: [[]],
       clusterNumber: [],
       showNumbers: false,
-      showNeighborhood: false,
+      showNeighborhoods: {core: false, border: false, noise: false},
       highlightTypes: true,
       colorClusters: false,
       step: 0,
@@ -75,10 +75,11 @@ class ClusterApp extends Component{
           minPoints={this.state.minPoints}
           showDifferentTypes={this.state.highlightTypes}
           colorClusters={this.state.colorClusters}
+          showNeighborhoods={this.state.showNeighborhoods}
           onRadiusChange={(num) => this.onRadiusChange(num)}
           onPointsChange={(num) => this.onMinPointsChange(num)}
           setShowNumbers={(value) => {this.setState({showNumbers: !this.state.showNumbers})}}
-          setShowNeighborhood={(value) => this.setState({showNeighborhood: !this.state.showNeighborhood})}
+          setShowNeighborhoods={(neighborhoodMap) => this.setState({showNeighborhoods: neighborhoodMap})}
           setDifferentTypes={(value) => this.setState({highlightTypes: !this.state.highlightTypes})}
           setClusterColor={(value) => this.setState({colorClusters: !this.state.colorClusters})}
         />
@@ -90,9 +91,7 @@ class ClusterApp extends Component{
             neighborList={this.state.neighborList}
             clusterNumber={this.state.clusterNumber}
             showNumbers={this.state.showNumbers}
-            showNeighborhoodCore={this.state.showNeighborhood}
-            showNeighborhoodBorder={this.state.showNeighborhood}
-            showNeighborhoodNoise={this.state.showNeighborhood}
+            showNeighborhoods={this.state.showNeighborhoods}
             highlightTypes={this.state.highlightTypes}
             colorClusters={this.state.colorClusters}
           />
