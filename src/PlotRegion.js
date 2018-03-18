@@ -35,7 +35,8 @@ const Axis = (props) => {
 }
 
 const getClusterColor = (clusterNumber) => {
-  const colorNames = ['#000000', '#66c2a4', '#2ca25f', '#006d2c'];
+  const colorNames = ['#000000', '#e41a1c', '#377eb8', '#4daf4a', '#984ea3', '#ff7f00'];
+
   return colorNames[clusterNumber % colorNames.length];
 }
 
