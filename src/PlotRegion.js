@@ -1,7 +1,7 @@
 import React from 'react';
-import { scaleLinear } from 'd3-scale';
+import {scaleLinear} from 'd3-scale';
 import {select} from 'd3-selection';
-import {axisBottom, axisLeft  } from 'd3-axis';
+import {axisBottom, axisLeft} from 'd3-axis';
 
 
 
@@ -71,28 +71,17 @@ const DrawSingleRectangle = (datum, index, props) => {
   return (<g><rect {...rectProps}/></g>);
 }
 
-const DisplayAsCircles = (props) => {
-  return props.data.map( (datum, index) => DrawSingleCircle(datum, index, props));
-}
-
-const DisplayAsRectangles = (props) => {
-  return props.data.map( (datum, index) => DrawSingleRectangle(datum, index, props));
-}
-
-const DisplayPoint = (datum, numNeighbors, clusterNumber, props) => {
+const DisplayPoint = (datum, type, clusterNumber, props) => {
 
   // are we coloring the point?
   let stroke = (props.colorClusters && getClusterColor(clusterNumber)) || '#000000';
   let fill = stroke;
 
-  // what type of point is it?
-  if (!props.highlightTypes || (numNeighbors >= props.minPoints)) {
-    // core point
+  if (!props.highlightTypes || (type === 'CORE')) {
     return DrawSingleCircle(datum, -1, {...props, fill, stroke, r: 5});
   }
 
-  if (clusterNumber){
-    // border point
+  if (type === 'BORDER'){
     return DrawSingleCircle(datum, -1, {...props, fill, stroke, r: 3});
   }
 
@@ -101,9 +90,9 @@ const DisplayPoint = (datum, numNeighbors, clusterNumber, props) => {
 
 const DisplayGlyphs = (props) => {
   return props.data.map((datum, index) => {
-    return DisplayPoint(datum,
-                        props.neighborList[index].length,
-                        props.clusterNumber[index],
+    return DisplayPoint(datum.point,
+                        datum.type,
+                        datum.clusterNumber,
                         props);
   });
 };
@@ -124,16 +113,16 @@ const DisplayAsNumbers = (props) => {
   const {xScale, yScale} = props;
   const elements = props.data.map( (datum, index) => {
     const labelProps = {
-      x: xScale(datum[0]),
-      y: yScale(datum[1]),
+      x: xScale(datum.point[0]),
+      y: yScale(datum.point[1]),
       fontFamily: 'sans-serif',
       fontSize: '20px',
       fill: 'blue'
     }
-    const clusterNumber = props.clusterNumber[index];
-    const text = props.neighborList[index].length + ((clusterNumber) ? ('/' + clusterNumber) : '');
+    const clusterNumber = datum.clusterNumber;
+    const label = datum.numNeighbors + ((clusterNumber) ? ('/' + clusterNumber) : '');
     return (
-      <g><text {...labelProps}>{text}</text></g>
+      <g><text {...labelProps}>{label}</text></g>
     )
   });
 
@@ -194,20 +183,15 @@ const ScatterPlot = (props) => {
     {props.showNeighborhoodNoise && DrawNeighborhood(processedData, 'NOISE', neighborhoodProps)}
 
     <DisplayGlyphs
-      data={props.data}
+      data={processedData}
       xScale={xScale}
       yScale={yScale}
-      clusterNumber={props.clusterNumber}
-      neighborList={props.neighborList}
       highlightTypes={props.highlightTypes}
       colorClusters={props.colorClusters}
-      minPoints={props.minPoints}
     />
     {props.showNumbers &&
       <DisplayAsNumbers
-        data={props.data}
-        neighborList={props.neighborList}
-        clusterNumber={props.clusterNumber}
+        data={processedData}
         xScale={xScale}
         yScale={yScale}
       />}
